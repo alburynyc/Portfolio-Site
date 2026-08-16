@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics="">
+<style>
+@font-face{font-family:'Neue Montreal';src:url('./fonts/NeueMontreal-Regular.otf') format('opentype');font-weight:400;font-style:normal;font-display:block;}
+*{box-sizing:border-box;}
+body{margin:0;background:#fff;font-family:'Neue Montreal',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:#111;}
+a{color:#111;text-decoration:none;}
+a:hover{color:#111;}
+::selection{background:#111;color:#fff;}
+@media (max-width:640px){
+  .ab-header{padding:20px 20px !important;}
+  .ab-row{flex-direction:column !important;align-items:flex-start !important;gap:10px !important;}
+  .ab-row-tags{text-align:left !important;}
+  .ab-about-grid{grid-template-columns:1fr !important;}
+  .ab-about-grid > div:first-child{max-width:180px;}
+  .ab-footer{flex-direction:column !important;align-items:flex-start !important;gap:8px !important;}
+  .ab-stat-grid{grid-template-columns:1fr !important;}
+}
+</style>
+</helmet>
+
+<div ref="{{ rootRef }}" style="position:relative;background:#fff;min-height:100vh;">
+
+<sc-if value="{{ showPreview }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;top:0;left:0;width:140px;height:280px;overflow:hidden;border:3px solid #111;border-radius:22px;box-shadow:0 0 0 1px #111;background:#fafafa;pointer-events:none;z-index:9999;transform:{{ previewTransform }};opacity:{{ previewOpacity }};transition:opacity 0.25s ease;">
+    <sc-if value="{{ previewIsImage }}" hint-placeholder-val="{{ false }}">
+      <div style="width:100%;height:100%;background:url({{ previewImage }}) top center / 100% auto no-repeat;"></div>
+    </sc-if>
+    <sc-if value="{{ previewIsPattern }}" hint-placeholder-val="{{ false }}">
+      <div style="width:100%;height:100%;background:{{ previewPattern }};"></div>
+    </sc-if>
+  </div>
+</sc-if>
+
+<header class="ab-header" style="display:flex;justify-content:space-between;align-items:center;padding:28px clamp(20px,5vw,40px);border-bottom:1px solid #eee;max-width:1200px;margin:0 auto;">
+  <div onClick="{{ goHome }}" style="font-size:15px;letter-spacing:0.3px;cursor:pointer;">Garrett Albury</div>
+  <div style="display:flex;gap:28px;">
+    <div onClick="{{ goAbout }}" style="font-size:13px;color:#777;letter-spacing:0.3px;cursor:pointer;transition:color 0.2s ease;" style-hover="{{ subtleHover }}">About</div>
+    <a href="mailto:garrett.albury@gmail.com" style="font-size:13px;color:#777;letter-spacing:0.3px;transition:color 0.2s ease;" style-hover="{{ subtleHover }}">Email</a>
+  </div>
+</header>
+
+<main style="max-width:1200px;margin:0 auto;">
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <section style="padding:56px clamp(20px,5vw,40px) 24px;">
+    <p style="font-size:17px;line-height:1.6;color:#555;max-width:520px;margin:0;">Product designer based in NYC building consumer financial tools at Capital One, and editing an independent publication on the side. <br><br>Selected work below ↓</p>
+  </section>
+
+  <section style="padding:8px clamp(20px,5vw,40px) 64px;">
+    <sc-for list="{{ projects }}" as="p" hint-placeholder-count="3">
+      <div class="ab-row" onClick="{{ p.open }}" onMouseEnter="{{ p.onEnter }}" onMouseLeave="{{ onLeaveRow }}" style="display:flex;justify-content:space-between;align-items:baseline;gap:24px;padding:38px 0;border-top:1px solid #eee;cursor:pointer;" data-reveal="{{ p.revealId }}">
+        <div style="display:flex;align-items:baseline;gap:20px;">
+          <div>
+            <span style="font-size:clamp(28px,4.5vw,52px);letter-spacing:-0.5px;color:{{ p.titleColor }};transition:color 0.25s ease;">{{ p.title }}</span>
+            <div style="font-size:12px;color:#bbb;letter-spacing:0.3px;margin-top:4px;">{{ p.year }}</div>
+          </div>
+        </div>
+        <div class="ab-row-tags" style="font-size:13px;color:#999;letter-spacing:0.3px;white-space:nowrap;text-align:right;">{{ p.tags }}</div>
+      </div>
+    </sc-for>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isProject }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:56px clamp(20px,5vw,40px) 24px;">
+    <div onClick="{{ goHome }}" style="font-size:13px;color:#999;letter-spacing:0.3px;cursor:pointer;margin-bottom:32px;transition:color 0.2s ease;" style-hover="{{ subtleHover }}">← Index</div>
+    <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:16px;margin-bottom:8px;">
+      <h1 style="font-size:clamp(36px,6vw,64px);letter-spacing:-1px;margin:0;font-weight:400;">{{ activeProject.title }}</h1>
+    </div>
+    <div style="font-size:13px;color:#999;letter-spacing:0.3px;margin-bottom:48px;">{{ activeProject.tags }}</div>
+    <sc-if value="{{ activeProject.links }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;gap:16px;margin-bottom:32px;">
+        <sc-for list="{{ activeProject.links }}" as="lnk" hint-placeholder-count="2">
+          <a href="{{ lnk.href }}" target="_blank" style="display:flex;align-items:center;gap:8px;padding:14px 22px;border:1px solid #111;font-size:14px;color:#333;">
+            <span>{{ lnk.label }}</span><span style="color:#bbb;">↗</span>
+          </a>
+        </sc-for>
+      </div>
+    </sc-if>
+    <p style="font-size:18px;line-height:1.65;color:#444;max-width:640px;margin:0 0 48px;">{{ activeProject.desc }}</p>
+  </section>
+
+  <sc-if value="{{ activeProject.hasCaseStudy }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:0 clamp(20px,5vw,40px) 24px;">
+    <div style="display:flex;align-items:baseline;gap:24px;flex-wrap:wrap;margin-bottom:24px;">
+      <div style="font-size:12px;letter-spacing:0.5px;text-transform:uppercase;color:#999;border:1px solid #ddd;padding:6px 14px;">{{ activeProject.role }}</div>
+    </div>
+    <div class="ab-stat-grid" style="display:grid;grid-template-columns:1fr 320px;gap:64px;align-items:center;padding:8px 0 48px;border-bottom:1px solid #eee;">
+      <p style="font-size:17px;line-height:1.65;color:#444;margin:0;max-width:640px;">{{ activeProject.context }}</p>
+      <div style="text-align:center;padding:32px 20px;background:#fafafa;border:1px solid #eee;">
+        <div style="font-size:44px;letter-spacing:-1px;">{{ activeProject.stat.value }}</div>
+        <div style="font-size:12px;color:#999;letter-spacing:0.3px;margin-top:10px;line-height:1.4;">{{ activeProject.stat.label }}</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:48px clamp(20px,5vw,40px);border-bottom:1px solid #eee;">
+    <div style="font-size:12px;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:16px;">The Problem</div>
+    <div style="font-size:22px;line-height:1.4;letter-spacing:-0.3px;max-width:640px;margin-bottom:16px;">{{ activeProject.problem.heading }}</div>
+    <p style="font-size:16px;line-height:1.7;color:#555;max-width:600px;margin:0;">{{ activeProject.problem.text }}</p>
+  </section>
+
+  <section style="padding:48px clamp(20px,5vw,40px);border-bottom:1px solid #eee;">
+    <div style="font-size:12px;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:16px;">The Solution</div>
+    <div style="font-size:22px;line-height:1.4;letter-spacing:-0.3px;max-width:640px;margin-bottom:16px;">{{ activeProject.solution.heading }}</div>
+    <p style="font-size:16px;line-height:1.7;color:#555;max-width:600px;margin:0;">{{ activeProject.solution.text }}</p>
+  </section>
+
+  <sc-if value="{{ activeProject.gallery }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:0 clamp(20px,5vw,40px) 48px;border-bottom:1px solid #eee;">
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;">
+      <sc-for list="{{ activeProject.gallery }}" as="g" hint-placeholder-count="2">
+        <div>
+          <div style="width:100%;aspect-ratio:4/3;background:#fafafa {{ g.url }};background-size:cover;background-position:center;background-repeat:no-repeat;border:1px solid #eee;margin-bottom:10px;"></div>
+          <div style="font-size:13px;color:#999;letter-spacing:0.3px;">{{ g.caption }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ activeProject.steps }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:48px clamp(20px,5vw,40px);border-bottom:1px solid #eee;">
+    <div style="font-size:12px;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:32px;">How It Works</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;">
+      <sc-for list="{{ activeProject.steps }}" as="s" hint-placeholder-count="3">
+        <div>
+          <div style="font-size:14px;color:#999;margin-bottom:14px;">{{ s.num }}</div>
+          <div style="font-size:15px;margin-bottom:14px;">{{ s.label }}</div>
+          <div style="aspect-ratio:9/19.5;max-height:560px;border:4px solid #111;border-radius:12%/6%;background:#fafafa {{ s.bg }};background-size:{{ s.zoom }};background-position:center;background-repeat:no-repeat;box-shadow:0 0 0 1px #111;"></div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+  </sc-if>
+
+  <section style="padding:48px clamp(20px,5vw,40px);border-bottom:1px solid #eee;position:relative;">
+    <div style="font-size:12px;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:24px;">Results</div>
+    <div style="font-size:clamp(40px,6vw,72px);letter-spacing:-2px;margin-bottom:16px;filter:{{ activeProject.confidentialBlur }};user-select:{{ activeProject.confidentialSelect }};">{{ activeProject.results.stat }}</div>
+    <p style="font-size:17px;line-height:1.6;color:#555;max-width:560px;margin:0 0 32px;filter:{{ activeProject.confidentialBlur }};user-select:{{ activeProject.confidentialSelect }};">{{ activeProject.results.statLabel }}</p>
+    <p style="font-size:17px;line-height:1.6;color:#333;font-style:italic;max-width:640px;border-top:1px solid #eee;padding-top:24px;margin:0;filter:{{ activeProject.confidentialBlur }};user-select:{{ activeProject.confidentialSelect }};">{{ activeProject.results.quote }}</p>
+    <sc-if value="{{ activeProject.confidential }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;background:rgba(255,255,255,0.35);display:flex;align-items:center;justify-content:center;">
+      <span style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#111;">Results Confidential</span>
+    </div>
+    </sc-if>
+  </section>
+
+  <section style="padding:48px clamp(20px,5vw,40px) 24px;">
+    <div style="font-size:12px;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:16px;">A SOLUTION BUILT TO LAST</div>
+    <p style="font-size:16px;line-height:1.7;color:#555;max-width:640px;margin:0 0 24px;">{{ activeProject.impact }}</p>
+    <sc-if value="{{ activeProject.impactImage }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:100%;">
+        <div>
+          <div style="width:100%;aspect-ratio:4/3;background:#fafafa {{ activeProject.impactImage }};background-size:cover;background-position:center;background-repeat:no-repeat;border:1px solid #eee;margin-bottom:10px;"></div>
+          
+        </div>
+      </div>
+    </sc-if>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ activeProject.hasCaseStudy }}" hint-placeholder-val="{{ true }}">
+  </sc-if>
+  <sc-if value="{{ activeProject.showGeneric }}" hint-placeholder-val="{{ false }}">
+  <div style="position:relative;">
+  <div style="filter:{{ activeProject.confidentialBlur }};user-select:{{ activeProject.confidentialSelect }};padding-top:28px;margin-top:-28px;">
+  <section style="padding:0 clamp(20px,5vw,40px) 24px;position:relative;">
+    <sc-if value="{{ activeProject.images }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;gap:24px;max-width:800px;margin:0 0 32px;">
+        <sc-for list="{{ activeProject.images }}" as="im" hint-placeholder-count="2">
+          <div style="flex:1 1 0;min-width:0;aspect-ratio:9/19.5;border:2px solid #111;border-radius:12%/6%;overflow:hidden;box-shadow:0 0 0 1px #111;background:#fafafa {{ im }};background-size:105% auto;background-position:top center;background-repeat:no-repeat;"></div>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ activeProject.showFallbackImage }}" hint-placeholder-val="{{ false }}">
+      <div style="aspect-ratio:16/9;border:1px solid #eee;background:{{ activeProject.pattern }};margin-bottom:24px;position:relative;">
+        <sc-if value="{{ activeProject.comingSoon }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;bottom:24px;left:24px;background:#fff;border:1px solid #ddd;padding:8px 16px;font-size:12px;color:#777;letter-spacing:0.3px;">Case study coming soon</div>
+        </sc-if>
+      </div>
+    </sc-if>
+    <sc-if value="{{ activeProject.body }}" hint-placeholder-val="{{ false }}">
+      <p style="font-size:17px;line-height:1.65;color:#444;max-width:640px;white-space:pre-line;margin:0 0 32px;">{{ activeProject.body }}</p>
+    </sc-if>
+    <sc-if value="{{ activeProject.stats }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;gap:48px;flex-wrap:wrap;border-top:1px solid #eee;padding-top:32px;">
+        <sc-for list="{{ activeProject.stats }}" as="st" hint-placeholder-count="2">
+          <div style="max-width:{{ st.maxWidth }};">
+            <div style="font-size:{{ st.valueSize }};letter-spacing:-0.3px;line-height:1.3;">{{ st.value }}</div>
+            <div style="font-size:13px;color:#999;letter-spacing:0.3px;margin-top:6px;">{{ st.label }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+  </section>
+  <sc-if value="{{ activeProject.howItWorks }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:0 clamp(20px,5vw,40px) 48px;">
+    <div style="font-size:12px;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:32px;">How It Works</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;">
+      <sc-for list="{{ activeProject.howItWorks }}" as="hw" hint-placeholder-count="3">
+        <div>
+          <div style="font-size:14px;color:#999;margin-bottom:14px;">{{ hw.num }}</div>
+          <div style="font-size:17px;line-height:1.4;">{{ hw.label }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+  </sc-if>
+  <sc-if value="{{ activeProject.whyDifferent }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:0 clamp(20px,5vw,40px) 64px;">
+    <div style="font-size:12px;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:32px;">Why It's Different</div>
+    <div style="display:flex;flex-direction:column;gap:20px;max-width:640px;">
+      <sc-for list="{{ activeProject.whyDifferent }}" as="w" hint-placeholder-count="3">
+        <p style="font-size:17px;line-height:1.6;color:#444;margin:0;padding-top:20px;border-top:1px solid #eee;">{{ w }}</p>
+      </sc-for>
+    </div>
+  </section>
+  </sc-if>
+  <sc-if value="{{ activeProject.visionForward }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:0 clamp(20px,5vw,40px) 64px;">
+    <div style="font-size:12px;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:16px;">Vision Forward</div>
+    <p style="font-size:17px;line-height:1.6;color:#444;max-width:640px;margin:0;">{{ activeProject.visionForward }}</p>
+  </section>
+  </sc-if>
+  </div>
+  <sc-if value="{{ activeProject.confidential }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;background:rgba(255,255,255,0.4);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:20px;padding-top:160px;">
+      <span style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#111;">Project Confidential</span>
+      <a href="mailto:garrett.albury@gmail.com" style="border:1px solid #111;padding:12px 24px;font-size:13px;letter-spacing:0.5px;text-transform:uppercase;color:#111;">Request Full Case Study</a>
+    </div>
+  </sc-if>
+  </div>
+  </sc-if>
+
+  <section class="ab-row" style="padding:32px clamp(20px,5vw,40px) 72px;border-top:1px solid #eee;margin-top:24px;display:flex;justify-content:space-between;align-items:center;">
+    <div onClick="{{ goHome }}" style="font-size:13px;color:#999;letter-spacing:0.3px;cursor:pointer;transition:color 0.2s ease;" style-hover="{{ subtleHover }}">← Index</div>
+    <div onClick="{{ activeProject.nextOpen }}" style="font-size:15px;color:#111;letter-spacing:0.3px;cursor:pointer;">Next — {{ activeProject.nextTitle }} →</div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
+  <section class="ab-about-grid" style="padding:56px clamp(20px,5vw,40px) 72px;display:grid;grid-template-columns:280px 1fr;gap:40px 56px;">
+    <div style="aspect-ratio: 1; border: 1px solid #eee; background: url(&quot;./headshot-2022-msrrqm0t-p03y.jpeg&quot;) center / cover no-repeat; align-self: start"></div>
+    <div>
+      <h1 style="font-size:clamp(34px,5vw,52px);letter-spacing:-1px;margin:0 0 28px;font-weight:400;">About</h1>
+      <p style="font-size:17px;line-height:1.65;color:#444;max-width:560px;margin:0 0 20px;">Garrett Albury is a Senior Product Designer based in New York. He currently designs financial products at Capital One at scale, focused on debit card experiences used by millions of customers.</p>
+      <p style="font-size:17px;line-height:1.65;color:#444;max-width:560px;margin:0 0 20px;">Outside of work, he writes and edits coolstuff.nyc, an independent, design-forward weekly newsletter, coolstuff.nyc.&nbsp;</p>
+      <div style="display:flex;gap:16px;margin-top:12px;">
+        <a href="mailto:garrett.albury@gmail.com" style="display:flex;align-items:center;gap:8px;padding:14px 22px;border:1px solid #111;font-size:14px;color:#333;transition:color 0.2s ease;" style-hover="{{ subtleHover }}"><span>Email</span><span style="color:#bbb;">↗</span></a>
+        <a href="https://www.linkedin.com/in/garrett-albury-a28572112/" target="_blank" style="display:flex;align-items:center;gap:8px;padding:14px 22px;border:1px solid #111;font-size:14px;color:#333;transition:color 0.2s ease;" style-hover="{{ subtleHover }}"><span>LinkedIn</span><span style="color:#bbb;">↗</span></a>
+      </div>
+      <div style="margin:32px 0 24px;">
+        <div style="font-size:12px;letter-spacing:0.3px;color:#999;text-transform:uppercase;margin-bottom:16px;">Experience</div>
+        <div style="display:flex;flex-direction:column;">
+          <div style="padding:16px 0;border-top:1px solid #eee;">
+            <div style="font-size:15px;color:#111;margin-bottom:8px;">Capital One</div>
+            <div style="font-size:14px;color:#555;line-height:1.7;">
+              <div>Manager, Product Design · Jan 2026 – Present</div>
+              <div>Principal Associate, Product Design · Jan 2022 – Jan 2026</div>
+              <div>Sr. Associate Product Designer · Jul 2019 – Jan 2022</div>
+              <div>Associate UX Designer · Jul 2018 – Jul 2019</div>
+            </div>
+          </div>
+          <div style="padding:16px 0;border-top:1px solid #eee;">
+            <div style="font-size:15px;color:#111;margin-bottom:4px;">coolstuff.nyc</div>
+            <div style="font-size:14px;color:#555;">Co-Founder &amp; Product Designer · Feb 2020 – Present</div>
+          </div>
+          <div style="padding:16px 0;border-top:1px solid #eee;">
+            <div style="font-size:15px;color:#111;margin-bottom:4px;">Where Are The Black Designers?</div>
+            <div style="font-size:14px;color:#555;">Co-Founder &amp; Treasurer · Jun 2020 – Dec 2023</div>
+          </div>
+          <div style="padding:16px 0;border-top:1px solid #eee;">
+            <div style="font-size:15px;color:#111;margin-bottom:4px;">Uber</div>
+            <div style="font-size:14px;color:#555;">UX Designer, Collaborative Project · Sep 2017 – Nov 2017</div>
+          </div>
+          <div style="padding:16px 0;border-top:1px solid #eee;border-bottom:1px solid #eee;">
+            <div style="font-size:15px;color:#111;margin-bottom:4px;">24e Design Co.</div>
+            <div style="font-size:14px;color:#555;">Designer · Oct 2015 – Jun 2018</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</sc-if>
+
+</main>
+
+<footer class="ab-footer" style="padding:32px clamp(20px,5vw,40px);max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #eee;">
+  <span style="font-size:12px;color:#bbb;">© 2026 Garrett Albury</span>
+  <span style="font-size:12px;color:#bbb;">Brooklyn, NY</span>
+</footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;enableCursorPreview&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;revealMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;wipe&quot;,&quot;options&quot;:[&quot;wipe&quot;,&quot;instant&quot;,&quot;none&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;hoverInvert&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+class Component extends DCLogic {
+  state = {
+    view: 'home',
+    mouseX: -300,
+    mouseY: -300,
+    hoverIndex: null,
+    revealed: {}
+  };
+
+  rootRef = React.createRef();
+  _raf = null;
+
+  projectsData = [
+    { index: '01', title: 'Discover Conversion', year: '2025\u20132026', tags: 'Capital One · Product Design Lead', desc: 'Migrating 11 million+ debit customers to a new payment network, without breaking the payments they depend on.', comingSoon: false, hasCaseStudy: true, showGeneric: false, pattern: 'url(./assets/discover-awareness.png)',
+      role: 'Design Lead \u00b7 Concept \u2192 Launch',
+      context: 'Capital One\u2019s acquisition of Discover meant every checking customer was issued a new debit card and moved onto the Discover payment network. There was no opt-out, and in the current-state experience this business decision would have required significant work from the customer.',
+      stat: { value: '11M+', label: 'Checking customers reissued a new debit card' },
+      problem: { heading: 'A new card number breaks every connected payment.', text: 'Recurring subscriptions and connected apps tied to the old card would silently fail. Customers had no built-in way to find what was connected, let alone move it.' },
+      solution: { heading: 'A guided switching experience.', text: 'I designed a flow that walked customers through moving every connected payment and subscription from their old card to the new one \u2014 no digging through statements required.' },
+      steps: [
+        { num: '01', label: 'Activation', bg: 'url(./assets/discover-activation.png)', zoom: 'cover' },
+        { num: '02', label: 'Awareness', bg: 'url(./assets/discover-awareness.png)', zoom: 'cover' },
+        { num: '03', label: 'Guided Payment Switcher', bg: 'url(./assets/discover-payment-switcher.png)', zoom: 'cover' }
+      ],
+      results: { stat: '$50B+', statLabel: 'in purchase volume retained \u2014 exceeding our 70% retention goal in under a year', quote: '\u201cCustomers named the switching experience the high point of the entire card transition.\u201d \u2014 moderated post-launch interviews' },
+      impact: 'Though scoped as a one-time reissue, I designed the guided switching flow to outlive the launch. Today, every customer with a lost or stolen debit card is routed through the same experience to reconnect their payments. Key components built for this project have since been contributed back to the Capital One Design System.'
+    },
+    { index: '02', title: 'Capital One Cash', year: '2026', tags: 'Capital One · Confidential', desc: 'A concept for personal, no-app-required gifting between customers and anyone in their contacts.\n\n\nCustomers create a fully customizable digital gift card and send it to anyone in their contacts — regardless of whether they bank with us. Recipients authenticate with just a phone number, then load the cash to a digital wallet and spend it anywhere.', comingSoon: false, hasCaseStudy: false, showGeneric: true, pattern: 'url(./assets/cash-hover-preview.png)', images: ['url(./assets/cash-review-send.png)', 'url(./assets/cash-customize.png)'],
+      howItWorks: [
+        { num: '01', label: 'Personalize the card' },
+        { num: '02', label: 'Send within a conversation' },
+        { num: '03', label: 'Claim with a phone number' }
+      ],
+      whyDifferent: [
+        'Recipients never need a Capital One account to receive or spend the gift.',
+        'Full customization keeps the personality that a plain transfer strips away.',
+        'The conversation happens wherever customers already talk \u2014 unmoderated by the bank.'
+      ],
+      visionForward: 'As a concept, Capital One Cash stakes a claim in a P2P moment banks have largely ceded to peer apps. The same personalized, no-account-required model could extend naturally toward allowances \u2014 the other underserved moment our research surfaced.',
+      confidential: true },
+    { index: '03', title: 'coolstuff.nyc', year: '2020\u2013Present', tags: 'Independent \u00b7 Editorial', desc: 'coolstuff.nyc is two people: Anna & Garrett Albury — a couple of designers living in Brooklyn trying their best to be writers.', body: 'Self-directed editorial and commerce site. Every issue is designed, shot, and shipped by hand \u2014 a counterweight to the systems work done during the day.', comingSoon: false, hasCaseStudy: false, showGeneric: true, pattern: 'url(./assets/coolstuff-nyc-guides.png)', images: ['url(./assets/coolstuff-nyc-guides.png)', 'url(./assets/coolstuff-menu.png)', 'url(./assets/coolstuff-best-of-nyc.png)'],
+      links: [
+        { label: 'coolstuff.nyc', href: 'https://www.coolstuff.nyc' },
+        { label: 'Newsletter', href: 'https://coolstuffnyc.substack.com' }
+      ],
+      body: 'We launched our first newsletter in February 2020 after having the idea while stuck on an M train somewhere between Williamsburg and Bushwick. While coolstuff.nyc has evolved since the first email went out to 42 people, we’ve held on to what inspires us — showcasing independent creators, designers & businesses, sharing diverse perspectives of a diverse city, and keeping things as positive as positively possible.',
+      stats: [
+        { value: '37.6K', label: 'Newsletter subscribers', valueSize: '36px', maxWidth: 'none' },
+        { value: '45.1K', label: 'Instagram followers', valueSize: '36px', maxWidth: 'none' },
+        { value: 'New York Magazine, MoMA, Perfectly Imperfect, Inc. Magazine', label: 'As seen in', valueSize: '17px', maxWidth: '260px' }
+      ] },
+    { index: '04', title: 'Automatic Savings', year: '2019', tags: 'Capital One \u00b7 Lead Designer', desc: 'Machine learning\u2013powered savings tools that helped customers build financial resilience without lifting a finger.', comingSoon: false, hasCaseStudy: true, showGeneric: false, pattern: 'url(./assets/savings-rule.avif)',
+      role: 'Lead Designer \u00b7 Concept \u2192 Launch',
+      context: 'I led design for Capital One\u2019s machine learning\u2013powered automatic savings feature, creating simple, intuitive experiences that encouraged consistent saving. Collaborating with product and tech teams, I focused on building an experience that would drive long-term engagement.',
+      stat: { value: '40%', label: 'of Americans can\u2019t cover a surprise $400 expense (Federal Reserve, 2018)' },
+      problem: { heading: 'Saving wasn\u2019t easy, mobile, or built for real life.', text: 'The existing product wasn\u2019t mobile-ready and saw low engagement. I led a 12-person workshop that mapped known tech constraints against an ideal customer journey, and used it to roadmap a rebuild \u2014 saving money is good for both customers and the business.' },
+      solution: { heading: 'Five ways to save, unified into one system.', text: 'Working within tech capabilities, competitive analysis, and customer research, I led the team to develop five distinct savings tools \u2014 Autopilot, Recurring Transfers, Round Ups, Paycheck Percentage, and Leftovers \u2014 replacing a single rigid, desktop-only plan with flexible tools built for how people actually save.' },
+      gallery: [
+        { url: 'url(./assets/savings-old-form.png)', caption: 'Before \u2014 a rigid, desktop-only savings plan' }
+      ],
+      impactImage: 'url(./assets/savings-chart.png)',
+      impactImageCaption: 'After \u2014 a guided, mobile-first rule builder',
+      steps: [
+        { num: '01', label: 'Explore ways to save', bg: 'url(./assets/savings-new-flow.png)', zoom: 'cover' },
+        { num: '02', label: 'Pick from the Rules Marketplace', bg: 'url(./assets/savings-marketplace.png)', zoom: '132%' },
+        { num: '03', label: 'Track progress automatically', bg: 'url(./assets/savings-overview.png)', zoom: '132%' }
+      ],
+      results: { stat: '67%', statLabel: 'of Automatic Savings customers increased their savings, vs. 59% of non-users', quote: 'To make savings feel playful and simple, I worked with Capital One\u2019s Accessibility Team to create a new gamified interaction pattern: Mad Libs.' },
+      impact: 'The Mad Libs interaction pattern has since been contributed to the Capital One Design System and is in use across several experiences, including enrollment and Capital One\u2019s Teen Checking product.'
+    }
+  ];
+
+  componentDidMount() {
+    this._onMove = (e) => {
+      if (this._raf) return;
+      this._raf = requestAnimationFrame(() => {
+        this.setState({ mouseX: e.clientX, mouseY: e.clientY });
+        this._raf = null;
+      });
+    };
+    window.addEventListener('mousemove', this._onMove);
+    this._setupObserver();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.view !== this.state.view) this._setupObserver();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('mousemove', this._onMove);
+    if (this._observer) this._observer.disconnect();
+  }
+
+  _setupObserver() {
+    if (this._observer) this._observer.disconnect();
+    const mode = this.props.revealMode ?? 'wipe';
+    if (mode === 'none') return;
+    requestAnimationFrame(() => {
+      const root = this.rootRef.current;
+      if (!root) return;
+      const els = root.querySelectorAll('[data-reveal]');
+      this._observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('data-reveal');
+            this.setState((s) => ({ revealed: { ...s.revealed, [id]: true } }));
+            this._observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      els.forEach((el) => this._observer.observe(el));
+    });
+  }
+
+  _revealStyle(id) {
+    const mode = this.props.revealMode ?? 'wipe';
+    const visible = !!this.state.revealed[id];
+    if (mode === 'none') return {};
+    if (mode === 'instant') {
+      return { opacity: visible ? 1 : 0, transition: 'opacity 0.15s ease' };
+    }
+    return {
+      opacity: visible ? 1 : 0,
+      transform: visible ? 'translateY(0)' : 'translateY(18px)',
+      transition: 'opacity 0.6s ease, transform 0.6s ease'
+    };
+  }
+
+  renderVals() {
+    const view = this.state.view;
+    const goHome = () => this.setState({ view: 'home', hoverIndex: null });
+    const goAbout = () => this.setState({ view: 'about' });
+    const enablePreview = this.props.enableCursorPreview ?? true;
+    const hoverInvert = this.props.hoverInvert ?? false;
+    const subtleHover = hoverInvert ? { color: '#111', textDecoration: 'underline' } : { color: '#111' };
+
+    const projects = this.projectsData.map((p, i) => ({
+      ...p,
+      revealId: 'home-' + i,
+      style: this._revealStyle('home-' + i),
+      titleColor: this.state.hoverIndex === i ? '#111' : '#999',
+      open: () => this.setState({ view: 'project-' + i, hoverIndex: null }),
+      onEnter: () => this.setState({ hoverIndex: i })
+    }));
+
+    let activeProject = null;
+    if (typeof view === 'string' && view.indexOf('project-') === 0) {
+      const idx = parseInt(view.split('-')[1], 10);
+      const p = this.projectsData[idx];
+      const nextIdx = (idx + 1) % this.projectsData.length;
+      activeProject = { ...p, nextTitle: this.projectsData[nextIdx].title, showFallbackImage: !p.images, confidentialBlur: p.confidential ? 'blur(8px)' : 'none', confidentialSelect: p.confidential ? 'none' : 'auto', nextOpen: () => this.setState({ view: 'project-' + nextIdx }) };
+    }
+
+    return {
+      rootRef: this.rootRef,
+      showPreview: enablePreview && this.state.hoverIndex !== null && view === 'home',
+      previewPattern: this.state.hoverIndex !== null ? this.projectsData[this.state.hoverIndex].pattern : 'none',
+      previewIsImage: this.state.hoverIndex !== null && this.projectsData[this.state.hoverIndex].pattern.indexOf('url(') === 0,
+      previewImage: this.state.hoverIndex !== null ? (this.projectsData[this.state.hoverIndex].pattern.match(/url\(([^)]+)\)/) || [])[1] : '',
+      previewIsPattern: this.state.hoverIndex !== null && this.projectsData[this.state.hoverIndex].pattern.indexOf('url(') !== 0,
+      previewTransform: `translate(${this.state.mouseX + 24}px, ${Math.min(Math.max(this.state.mouseY - 90, 8), (typeof window !== 'undefined' ? window.innerHeight : 900) - 288)}px)`,
+      previewOpacity: this.state.hoverIndex !== null ? 1 : 0,
+
+      isHome: view === 'home',
+      isProject: !!activeProject,
+      isAbout: view === 'about',
+      activeProject,
+      onLeaveRow: () => this.setState({ hoverIndex: null }),
+
+      goHome, goAbout,
+      subtleHover,
+      projects
+    };
+  }
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#17140F; --ink-soft:#2A251D; --paper:#F7F4EC; --paper-dim:#EDE7D9;
+      --accent:#C2410C; --line:rgba(23,20,15,0.14); --line-onink:rgba(247,244,236,0.18);
+      --ink-muted:#6E6656; --paper-muted:rgba(247,244,236,0.62);
+      --serif:'Source Serif 4', serif; --sans:'IBM Plex Sans', sans-serif;
+      --type-display:132px; --type-title:64px; --type-subtitle:40px; --type-body:30px; --type-small:24px; --type-label:24px;
+      --pad-top:100px; --pad-bottom:80px; --pad-x:120px; --gap-title:48px; --gap-item:24px;
+    }
+    body{ margin:0; }
+  </style>
+</helmet>
+<x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%" data-uneditable="">
+
+<section data-label="Cover" data-speaker-notes="Open warmly. Introduce yourself and set the frame: 10 years of consumer product design experience, most recently leading debit experiences at Capital One." style="color: FFF7E0; display: flex; flex-direction: column; justify-content: space-between; padding: var(--pad-top) var(--pad-x) var(--pad-bottom) var(--pad-x); font-family: var(--sans); background-color: #584031">
+  <div style="font-family: var(--sans); font-size: var(--type-label); letter-spacing: 0.18em; text-transform: uppercase; color: #E0F4FF; font-weight: 600">Portfolio Review</div>
+  <div>
+    <div style="font-family:var(--serif); font-size:var(--type-display); font-weight:500; line-height:1.02; color:var(--paper);">Garrett Albury</div>
+    <div style="margin-top:28px; font-size:var(--type-subtitle); color:var(--paper-muted); font-weight:400;">Product Design Manager — Debit Experiences, Capital One</div>
+  </div>
+  <div style="display:flex; justify-content:space-between; align-items:flex-end; border-top:1px solid var(--line-onink); padding-top:32px;">
+    <div style="font-size:var(--type-small); color:var(--paper-muted);">July 2026</div>
+    
+  </div>
+</section>
+
+
+
+<section data-label="About Me" data-speaker-notes="Keep this brief and personal. The coolstuff.nyc detail shows you build and ship things outside of a day job too — a real audience, a real newsletter." style="background:var(--paper); color:var(--ink); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom) var(--pad-x); font-family:var(--sans);">
+  <div style="font-family:var(--serif); font-size:var(--type-title); font-weight:500;">About Me</div>
+  <div style="flex:1; display:grid; grid-template-columns:1.3fr 1fr; gap:100px; align-items:center; margin-top:var(--gap-title);">
+    <div style="display:flex; flex-direction:column; gap:28px;">
+      <p style="font-size:var(--type-body); line-height:1.5; margin:0; color:var(--ink-soft);">I lead design for debit card experiences at <b style="color: #C2410C">Capital One</b> — the products people use every day to spend, protect, and understand their money.</p>
+      <p style="font-size:var(--type-body); line-height:1.5; margin:0; color:var(--ink-soft);">Outside of that, I co-founded <span style="color:var(--accent); font-weight:600;">coolstuff.nyc</span>, a New York City newsletter I've run for six years — now reaching over 40,000 readers every week.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:24px;">
+      <div style="width: 459px; height: 446px; border-radius: 50%; overflow: hidden; align-self: center; background: url(&quot;./headshot-2022-mrnuqs83-pu5r.jpeg&quot;) center / cover no-repeat">
+        
+      </div>
+      <div style="display:flex; gap:24px; justify-content:center;">
+        
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-label="Section: Discover Conversion" data-speaker-notes="Set the stakes: this was a mandatory, mass-scale migration, not an opt-in feature. Transition into the story." style="color: var(--paper); display: flex; flex-direction: column; justify-content: center; padding: var(--pad-top) var(--pad-x) var(--pad-bottom) var(--pad-x); font-family: var(--sans); background-color: #584031">
+  <div style="font-family: var(--serif); font-size: 120px; color: #E0F4FF; line-height: 1">01</div>
+  <div style="font-family:var(--serif); font-size:104px; font-weight:500; margin-top:24px; line-height:1.05;">Discover Conversion</div>
+  <div style="font-size:var(--type-subtitle); color:var(--paper-muted); margin-top:28px; max-width:1200px;">Migrating 5 million+ debit customers to a new payment network, without breaking the payments they depend on.</div>
+</section>
+
+<section data-label="Context &amp; Role" data-speaker-notes="Explain the business context: Capital One's acquisition of Discover required reissuing every checking customer's debit card onto the Discover network. State your role plainly." style="background:var(--paper); color:var(--ink); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom) var(--pad-x); font-family:var(--sans);">
+  <div style="display:flex; align-items:baseline; gap:24px;">
+    <div style="font-family:var(--serif); font-size:var(--type-title); font-weight:500;">Context &amp; Role</div>
+    <div style="margin-left:auto; font-size:var(--type-label); letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); font-weight:600; border:1px solid var(--accent); padding:8px 18px; border-radius:100px;">Design Lead · Concept → Launch</div>
+  </div>
+  <div style="flex:1; display:grid; grid-template-columns:1fr 480px; gap:100px; align-items:center; margin-top:var(--gap-title);">
+    <p style="font-size:var(--type-body); line-height:1.55; margin:0; color:var(--ink-soft); max-width:900px;">Capital One's acquisition of Discover meant every checking customer was issued a new debit card and moved onto the Discover payment network. There was no opt-out, and this business decision would have required significant work for the customer in the current state of the experience.</p>
+    <div style="text-align:center; padding:48px 32px; background:var(--ink); border-radius:8px;">
+      <div style="font-family:var(--serif); font-size:88px; color:var(--paper); line-height:1;">5M+</div>
+      <div style="font-size:var(--type-small); color:var(--paper-muted); margin-top:16px;">Checking customers reissued a new debit card</div>
+    </div>
+  </div>
+</section>
+
+<section data-label="The Problem" data-speaker-notes="This is the core tension of the case study: a new card number silently breaks every connected payment. Set up why this matters before showing the solution." style="background:var(--paper); color:var(--ink); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom) var(--pad-x); font-family:var(--sans);">
+  <div style="font-family:var(--serif); font-size:var(--type-title); font-weight:500;">The Problem</div>
+  <div style="flex:1; display:grid; grid-template-columns:1fr 1fr; gap:100px; align-items:center; margin-top:var(--gap-title);">
+    <div>
+      <div style="font-size:var(--type-subtitle); font-weight:500; line-height:1.3; color:var(--ink-soft);">A new card number breaks every connected payment.</div>
+      <p style="font-size:var(--type-body); line-height:1.55; margin-top:32px; color:var(--ink-muted);">Recurring subscriptions and connected apps tied to the old card would silently fail. Customers had no built-in way to find what was connected, let alone move it.</p>
+    </div>
+    <div style="width:100%; aspect-ratio:4/3;">
+      <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="p1-problem" shape="rounded" radius="16" placeholder="Screenshot: declined payment / disrupted subscription" style="width:100%;height:100%" hint-size="600,450"></x-import>
+    </div>
+  </div>
+</section>
+
+<section data-label="The Solution" data-speaker-notes="Introduce the guided switching experience as the resolution to the problem you just set up." style="color: var(--paper); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom) var(--pad-x); font-family: var(--sans); background-color: #584031">
+  <div style="font-family:var(--serif); font-size:var(--type-title); font-weight:500;">The Solution</div>
+  <div style="flex:1; display:grid; grid-template-columns:1fr 1fr; gap:100px; align-items:center; margin-top:var(--gap-title);">
+    <div>
+      <div style="font-size:var(--type-subtitle); font-weight:500; line-height:1.3;">A guided switching experience.</div>
+      <p style="font-size:var(--type-body); line-height:1.55; margin-top:32px; color:var(--paper-muted);">I designed a flow that walked customers through moving every connected payment and subscription from their old card to the new one — no digging through statements required.</p>
+    </div>
+    <div style="width:100%; aspect-ratio:4/3;">
+      <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="p1-solution" shape="rounded" radius="16" placeholder="Screenshot: guided switching experience" style="width: 344px; height: 700px" hint-size="600,450"></x-import>
+    </div>
+  </div>
+</section>
+
+<section data-label="How It Works" data-speaker-notes="Walk through the three-step flow at a high level — detect, guide, confirm. Keep it brisk, the detail lives in the screenshots." style="background:var(--paper); color:var(--ink); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom) var(--pad-x); font-family:var(--sans);">
+  <div style="font-family:var(--serif); font-size:var(--type-title); font-weight:500;">How It Works</div><div style="flex:1; display:grid; grid-template-columns:repeat(3,1fr); gap:56px; margin-top:var(--gap-title);">
+    <div style="display:flex; flex-direction:column; gap:24px;">
+      <div style="font-size:var(--type-body); font-weight:500;">Awareness</div>
+      <div style="width: 461px; aspect-ratio: 9/16; max-height: 380px; height: 650px; position: relative">
+        
+      <div style="box-sizing: border-box; display: flex; flex-direction: column; width: 316px; height: 674px; border-radius: 8px; position: absolute; left: 3px; top: -1px; background: url(&quot;./img_2146-mrnmz7ec-ptzw.png&quot;) center / cover no-repeat"></div></div>
+      
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 24px; position: relative">
+      
+      <div style="font-size:var(--type-body); font-weight:500;">Activation</div>
+      
+    <div style="box-sizing: border-box; display: flex; flex-direction: column; width: 316px; height: 674px; border-radius: 8px; position: absolute; left: 3px; top: 53px; background: url(&quot;./img_2545-mrnmxw9o-64z9.png&quot;) center / cover no-repeat"></div></div>
+    <div style="display:flex; flex-direction:column; gap:24px;">
+      
+      
+      <div style="font-size:var(--type-body); font-weight:500;">Guided Payment Switcher</div><x-import component-from-global-scope="image-slot" from="./image-slot.js" id="p1-step1" shape="rounded" radius="16" placeholder="Screen: surface connected payments" style="width: 316px; height: 674px" hint-size="240,380"></x-import>
+    </div>
+  </div>
+  
+</section>
+
+<section data-label="Results" data-speaker-notes="This is the impact slide. Lead with the dollar figure, then the timeframe, then the qualitative signal from customer interviews." style="color: var(--paper); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom) var(--pad-x); font-family: var(--sans); background-color: #584031">
+  <div style="font-family:var(--serif); font-size:var(--type-title); font-weight:500;">Results</div>
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:56px;">
+    <div style="display:flex; align-items:baseline; gap:64px;">
+      <div style="font-family: var(--serif); font-size: 180px; color: #E0F4FF; line-height: 1">$50B+</div>
+      <div style="font-size:var(--type-subtitle); color:var(--paper-muted); max-width:560px;">in purchase volume retained — exceeding our 70% retention goal in under a year</div>
+    </div>
+    <div style="border-top:1px solid var(--line-onink); padding-top:40px; font-family:var(--serif); font-size:var(--type-subtitle); font-style:italic; color:var(--paper); max-width:1400px; line-height:1.4;">"Customers named the switching experience the high point of the entire card transition" — moderated post-launch interviews</div>
+  </div>
+</section>
+
+<section data-label="Built to Last" data-speaker-notes="Close the first case study on longevity: this wasn't a one-off, it's now permanent infrastructure for lost or stolen card recovery." style="background:var(--paper); color:var(--ink); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom) var(--pad-x); font-family:var(--sans);">
+  
+  <div style="font-family:var(--serif); font-size:var(--type-title); font-weight:500;">Impact Built to Last</div><div style="flex:1; display:flex; align-items:center; margin-top:var(--gap-title);">
+    
+  <p style="font-size:var(--type-subtitle); line-height:1.5; margin:0; color:var(--ink-soft); max-width:1500px;">Though scoped as a one-time reissue, I designed the guided switching flow to outlive the launch. Today, every customer with a lost or stolen debit card is routed through the same experience to reconnect their payments.<br><br>Additionally key components developed for this experience have been contributed back to the Capital One Design System.</p></div>
+</section>
+
+<section data-label="Section: Capital One Cash" data-speaker-notes="Second case study is conceptual, not shipped — frame it as an exploration grounded in real research, with a smaller team." style="color: var(--paper); display: flex; flex-direction: column; justify-content: center; padding: var(--pad-top) var(--pad-x) var(--pad-bottom) var(--pad-x); font-family: var(--sans); background-color: #584031">
+  <div style="font-family: var(--serif); font-size: 120px; color: #E0F4FF; line-height: 1">02</div>
+  <div style="font-family:var(--serif); font-size:104px; font-weight:500; margin-top:24px; line-height:1.05;">Capital One Cash</div>
+  <div style="font-size:var(--type-subtitle); color:var(--paper-muted); margin-top:28px; max-width:1200px;">A concept for personal, no-app-required gifting between customers and anyone in their contacts.</div>
+</section>
+
+<section data-label="The Insight" data-speaker-notes="Ground this in real research: a long-term study identified allowances and gifts as underserved P2P moments. Explain why you picked gifting, and state team size / conceptual nature." style="background:var(--paper); color:var(--ink); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom) var(--pad-x); font-family:var(--sans);">
+  <div style="display:flex; align-items:baseline; gap:24px;">
+    <div style="font-family:var(--serif); font-size:var(--type-title); font-weight:500;">The Insight</div>
+    <div style="margin-left:auto; font-size:var(--type-label); letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); font-weight:600; border:1px solid var(--accent); padding:8px 18px; border-radius:100px;">Design Lead + 1 · Concept</div>
+  </div>
+  <div style="flex:1; display:grid; grid-template-columns:1fr 1fr; gap:100px; align-items:center; margin-top:var(--gap-title);">
+    <p style="font-size:var(--type-body); line-height:1.55; margin:0; color:var(--ink-soft);">A long-term study with our design research partners surfaced two person-to-person moments Capital One wasn't serving well: allowances and gifts. With another team already building a teen checking account, I focused my exploration on gifting.</p>
+    <div style="display:flex; flex-direction:column; gap:20px;">
+      <div style="padding:28px 32px; background:var(--paper-dim); border-radius:4px; font-size:var(--type-body); font-weight:500;">Allowances <span style="float:right; color:var(--ink-muted); font-weight:400; font-size:var(--type-small);">owned elsewhere</span></div>
+      <div style="padding:28px 32px; background:var(--ink); color:var(--paper); border-radius:4px; font-size:var(--type-body); font-weight:500;">Gifts <span style="float:right; color:var(--accent); font-weight:600; font-size:var(--type-small);">my focus</span></div>
+    </div>
+  </div>
+</section>
+
+<section data-label="The Opportunity" data-speaker-notes="Explain the specific pain points with existing digital gifting: lacks personality, and requires both people to be on the same app." style="background:var(--paper); color:var(--ink); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom) var(--pad-x); font-family:var(--sans);">
+  <div style="font-family:var(--serif); font-size:var(--type-title); font-weight:500;">The Opportunity</div>
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:var(--gap-title); margin-top:var(--gap-title);">
+    <div style="font-size:var(--type-subtitle); font-weight:500; color:var(--ink-soft); max-width:1500px;">Digital gifting today is transactional, not personal.</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:56px;">
+      <div style="padding:36px; border:1px solid var(--line); border-radius:4px;">
+        <div style="font-size:var(--type-label); text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-muted); font-weight:600;">Pain Point 01</div>
+        <div style="font-size:var(--type-body); margin-top:16px; line-height:1.5;">Apps like Venmo require both sender and recipient to have an account.</div>
+      </div>
+      <div style="padding:36px; border:1px solid var(--line); border-radius:4px;">
+        <div style="font-size:var(--type-label); text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-muted); font-weight:600;">Pain Point 02</div>
+        <div style="font-size:var(--type-body); margin-top:16px; line-height:1.5;">The moment itself has no personality — it's a transfer, not a gift.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-label="The Solution: Cash" data-speaker-notes="Introduce Capital One Cash — a customizable digital gift card sendable to anyone, no account required to receive." style="color: var(--paper); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom) var(--pad-x); font-family: var(--sans); background-color: #584031">
+  <div style="font-family:var(--serif); font-size:var(--type-title); font-weight:500;">The Solution</div>
+  <div style="flex:1; display:grid; grid-template-columns:1fr 1fr; gap:100px; align-items:center; margin-top:var(--gap-title);">
+    <div>
+      <div style="font-size:var(--type-subtitle); font-weight:500; line-height:1.3;">Capital One Cash</div>
+      <p style="font-size:var(--type-body); line-height:1.55; margin-top:32px; color:var(--paper-muted);">Customers create a fully customizable digital gift card and send it to anyone in their contacts — regardless of whether they bank with us. Recipients authenticate with just a phone number, then load the cash to a digital wallet and spend it anywhere.</p>
+    </div><x-import component-from-global-scope="image-slot" from="./image-slot.js" id="p2-solution" shape="rounded" radius="16" placeholder="Screenshot: customizable gift card" style="width: 459px; height: 820px" hint-size="600,450"></x-import>
+    <div style="width:100%; aspect-ratio:4/3;">
+      
+    </div>
+  </div>
+</section>
+
+<section data-label="How It Works: Cash" data-speaker-notes="Walk the three-step flow: personalize, send where the conversation lives, recipient claims via phone number into a wallet." style="background:var(--paper); color:var(--ink); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom) var(--pad-x); font-family:var(--sans);">
+  <div style="font-family:var(--serif); font-size:var(--type-title); font-weight:500;">How It Works</div>
+  <div style="flex:1; display:grid; grid-template-columns:repeat(3,1fr); gap:56px; margin-top:var(--gap-title);">
+    <div style="display:flex; flex-direction:column; gap:24px;">
+      <div style="font-family:var(--serif); font-size:56px; color:var(--accent);">01</div>
+      
+      <div style="font-size: var(--type-body); font-weight: 500; font-family: &quot;IBM Plex Sans&quot;, sans-serif">Personalize the card</div><x-import component-from-global-scope="image-slot" from="./image-slot.js" id="p2-step1" shape="rounded" radius="16" placeholder="Screen: personalize the gift card" style="width: 488px; height: 499px" hint-size="240,380"></x-import>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 24px; position: relative">
+      <div style="font-family:var(--serif); font-size:56px; color:var(--accent);">02</div>
+      <div style="font-size:var(--type-body); font-weight:500;">Send within a conversation</div>
+      
+    <div style="box-sizing: border-box; display: flex; flex-direction: column; width: 488px; height: 499px; border-radius: 8px; position: absolute; left: 3px; top: 165px; background: url(&quot;./img_2022-mrnnveka-zvoz.jpg&quot;) center / cover no-repeat"></div></div>
+    <div style="display:flex; flex-direction:column; gap:24px;">
+      <div style="font-family:var(--serif); font-size:56px; color:var(--accent);">03</div>
+      <div style="font-size:var(--type-body); font-weight:500;">Claim with a phone number</div><div style="width:100%; aspect-ratio:9/16; max-height:380px;">
+        <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="p2-step3" shape="rounded" radius="16" placeholder="Screen: claim and load to wallet" style="width: 488px; height: 499px" hint-size="240,380"></x-import>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<section data-label="Why It's Different" data-speaker-notes="Contrast with incumbent P2P apps: no account needed to receive, gifting keeps its personality, conversation stays unmanaged by the bank." style="color: var(--paper); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom) var(--pad-x); font-family: var(--sans); background-color: #584031">
+  <div style="font-family:var(--serif); font-size:var(--type-title); font-weight:500;">Why It's Different</div>
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:var(--gap-item);">
+    <div style="display:flex; align-items:center; gap:40px; padding:28px 0; border-bottom:1px solid var(--line-onink);">
+      <div style="width:12px; height:12px; border-radius:50%; background:var(--accent); flex-shrink:0;"></div>
+      <div style="font-size:var(--type-body); line-height:1.5;">Recipients never need a Capital One account to receive or spend the gift.</div>
+    </div>
+    <div style="display:flex; align-items:center; gap:40px; padding:28px 0; border-bottom:1px solid var(--line-onink);">
+      <div style="width:12px; height:12px; border-radius:50%; background:var(--accent); flex-shrink:0;"></div>
+      <div style="font-size:var(--type-body); line-height:1.5;">Full customization keeps the personality that a plain transfer strips away.</div>
+    </div>
+    <div style="display:flex; align-items:center; gap:40px; padding:28px 0;">
+      <div style="width:12px; height:12px; border-radius:50%; background:var(--accent); flex-shrink:0;"></div>
+      <div style="font-size:var(--type-body); line-height:1.5;">The conversation happens wherever customers already talk — unmoderated by the bank.</div>
+    </div>
+  </div>
+</section>
+
+<section data-label="Vision Forward" data-speaker-notes="Close the second case study by framing it as a concept with room to grow — could extend toward allowances, and stakes a claim in a P2P moment banks have largely ceded to peer apps." style="background:var(--paper); color:var(--ink); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom) var(--pad-x); font-family:var(--sans);">
+  <div style="font-family:var(--serif); font-size:var(--type-title); font-weight:500;">Vision Forward</div>
+  <div style="flex:1; display:flex; align-items:center; margin-top:var(--gap-title);">
+    <p style="font-size:var(--type-subtitle); line-height:1.5; margin:0; color:var(--ink-soft); max-width:1500px;">As a concept, Capital One Cash stakes a claim in a P2P moment banks have largely ceded to peer apps. The same personalized, no-account-required model could extend naturally toward allowances — the other underserved moment our research surfaced.</p>
+  </div>
+</section>
+
+<section data-label="Thank You" data-speaker-notes="Close warmly, invite questions, leave contact info up." style="color: var(--paper); display: flex; flex-direction: column; justify-content: space-between; padding: var(--pad-top) var(--pad-x) var(--pad-bottom) var(--pad-x); font-family: var(--sans); background-color: #584031">
+  <div style="font-family: var(--serif); font-size: var(--type-label); letter-spacing: 0.18em; text-transform: uppercase; color: #E0F4FF; font-weight: 600">Thank You</div>
+  <div style="font-family:var(--serif); font-size:112px; font-weight:500; line-height:1.05;">Let's talk.</div>
+  <div style="display:flex; justify-content:space-between; align-items:flex-end; border-top:1px solid var(--line-onink); padding-top:32px;">
+    <div style="font-size:var(--type-body);">Garrett Albury</div>
+    <div style="display:flex; gap:56px; font-size:var(--type-small); color:var(--paper-muted);">
+      <div>garrett@example.com</div>
+      <div>linkedin.com/in/garrettalbury</div>
+      <div>coolstuff.nyc</div>
+    </div>
+  </div>
+</section>
+
+</x-import>
+</x-dc>
+</body>
+</html>
